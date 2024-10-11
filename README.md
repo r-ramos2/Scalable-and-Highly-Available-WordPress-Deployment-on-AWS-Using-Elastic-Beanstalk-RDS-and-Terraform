@@ -1,0 +1,1 @@
+# Scalable-and-Highly-Available-WordPress-Deployment-on-AWS-Using-Elastic-Beanstalk-RDS-and-Terraform
