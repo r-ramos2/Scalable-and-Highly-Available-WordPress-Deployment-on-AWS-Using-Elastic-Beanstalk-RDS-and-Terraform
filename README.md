@@ -10,19 +10,25 @@
    - [Amazon RDS Setup](#amazon-rds-setup)
 5. [Step 2: Automate with Terraform](#step-2-automate-with-terraform)
    - [Setup Instructions](#setup-instructions)
+   - [Using Variables for Configuration](#using-variables-for-configuration)
 6. [Security Best Practices](#security-best-practices)
-7. [Cleanup](#cleanup)
-8. [Conclusion](#conclusion)
-9. [Acknowledgments](#acknowledgments)
+   - [Data Encryption](#data-encryption)
+   - [Access Management](#access-management)
+   - [Monitoring and Logging](#monitoring-and-logging)
+7. [Common Issues and Troubleshooting](#common-issues-and-troubleshooting)
+8. [Cleanup](#cleanup)
+9. [Conclusion](#conclusion)
+10. [Acknowledgments](#acknowledgments)
+11. [Terraform Configuration Files](#terraform-configuration-files)
 
 ## Overview
 This guide provides step-by-step instructions to deploy a **highly available, scalable, and secure WordPress website** on **AWS Elastic Beanstalk** with **Amazon RDS** for database management. This setup leverages **Terraform** for automation, ensuring that AWS best practices for security, scalability, and performance are followed. The architecture is designed to handle high traffic loads using a multi-AZ (Availability Zone) configuration for fault tolerance.
 
 ---
 
-<img width="1012" alt="wp-diagram" src="https://github.com/user-attachments/assets/b54506cb-d622-475d-ba43-b47122abb630">
+![Architecture Diagram](https://github.com/user-attachments/assets/b54506cb-d622-475d-ba43-b47122abb630)
 
-*Architecture Diagram*
+*Architecutre diagram*
 
 ## AWS Architecture Breakdown
 - **Elastic Beanstalk**: Manages infrastructure provisioning, load balancing, scaling, and monitoring for the WordPress environment.
@@ -54,7 +60,7 @@ This guide provides step-by-step instructions to deploy a **highly available, sc
 1. **Create Application**:  
    - Go to **Elastic Beanstalk** in the AWS Console.
    - Create a new application named `wordpress-app` and select **PHP** as the platform.
-   - Upload the **WordPress** `.zip` file (make sure to download and compress it from the official WordPress website).
+   - Upload the **WordPress** `.zip` file (download and compress it from the official WordPress website).
 
 2. **Environment Configuration**:
    - Set up an environment as a **Web server environment**.
@@ -89,7 +95,7 @@ This guide provides step-by-step instructions to deploy a **highly available, sc
    ```
 
 2. **Download the Terraform Configuration**:
-   - The Terraform configuration file `main.tf` is available in the GitHub repository.
+   - The Terraform configuration files have been uploaded separately.
 
 3. **Run Terraform**:
    ```bash
@@ -97,14 +103,50 @@ This guide provides step-by-step instructions to deploy a **highly available, sc
    ```
    This command will automatically provision the entire infrastructure on AWS, including Elastic Beanstalk, RDS, IAM roles, and associated configurations.
 
+### Using Variables for Configuration
+To enhance flexibility and security, variables have been used for Terraform configurations. Here’s an example of how to declare and use variables in the `main.tf`:
+
+```hcl
+variable "region" {
+  description = "AWS region"
+  default     = "us-west-2"
+}
+
+variable "db_password" {
+  description = "The database password"
+  type        = string
+  sensitive   = true
+}
+```
+
+Make sure to refer to the `terraform.tfvars` file to pass the actual values for these variables:
+
+```hcl
+db_password = "your_secure_password"
+```
+
 ---
 
 ## Security Best Practices
-1. **Use AWS KMS** for encryption of sensitive data, including RDS credentials.
-2. **Enable MFA** for secure access to AWS accounts.
-3. **Implement SSL** connections for data-in-transit between WordPress and RDS.
-4. Apply the **Least Privilege Principle** to IAM roles.
-5. Utilize **CloudWatch** and **CloudTrail** for monitoring and logging.
+
+### Data Encryption
+1. **Use AWS KMS**: Implement AWS Key Management Service for encryption of sensitive data, including RDS credentials and S3 objects.
+2. **Enable SSL**: Configure SSL connections for data-in-transit between WordPress and RDS.
+
+### Access Management
+1. **Enable MFA**: Use Multi-Factor Authentication for secure access to AWS accounts.
+2. **Implement Least Privilege**: Apply the least privilege principle to IAM roles, ensuring that users and services have only the permissions they need.
+
+### Monitoring and Logging
+1. **Utilize CloudWatch**: Set up CloudWatch for monitoring application health, performance metrics, and triggering alarms for unusual activities.
+2. **Enable CloudTrail**: Use AWS CloudTrail to log all API calls, enhancing visibility and compliance.
+
+---
+
+## Common Issues and Troubleshooting
+1. **Database Connection Errors**: Ensure that the RDS instance is in the same VPC as the Elastic Beanstalk environment and that the security groups allow traffic on the necessary ports.
+2. **Deployment Timeout**: If the Elastic Beanstalk deployment times out, check the logs in the AWS console for any application errors or resource limits.
+3. **Insufficient Permissions**: Double-check IAM roles and policies to ensure that all necessary permissions are granted.
 
 ---
 
