@@ -109,7 +109,7 @@ To enhance flexibility and security, variables have been used for Terraform conf
 ```hcl
 variable "region" {
   description = "AWS region"
-  default     = "us-west-2"
+  default     = "us-east-1"
 }
 
 variable "db_password" {
