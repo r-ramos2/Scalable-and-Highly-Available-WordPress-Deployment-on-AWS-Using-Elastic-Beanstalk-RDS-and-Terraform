@@ -18,8 +18,7 @@
 7. [Common Issues and Troubleshooting](#common-issues-and-troubleshooting)
 8. [Cleanup](#cleanup)
 9. [Conclusion](#conclusion)
-10. [Acknowledgments](#acknowledgments)
-11. [Terraform Configuration Files](#terraform-configuration-files)
+10. [Resources](#resources)
 
 ## Overview
 This guide provides step-by-step instructions to deploy a **highly available, scalable, and secure WordPress website** on **AWS Elastic Beanstalk** with **Amazon RDS** for database management. This setup leverages **Terraform** for automation, ensuring that AWS best practices for security, scalability, and performance are followed. The architecture is designed to handle high traffic loads using a multi-AZ (Availability Zone) configuration for fault tolerance.
@@ -166,5 +165,11 @@ This guide outlines the process of deploying a **secure and scalable WordPress w
 
 ---
 
-## Acknowledgments
-Thanks to the [AWS Documentation](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/php-hawordpress-tutorial.html) for providing invaluable insights and inspiration for this tutorial.
+## Resources
+- [AWS Elastic Beanstalk Documentation](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html)
+- [Amazon RDS User Guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
+- [Terraform Documentation](https://www.terraform.io/docs/index.html)
+- [WordPress Official Documentation](https://wordpress.org/support/)
+- [AWS Security Best Practices](https://aws.amazon.com/architecture/security-identity-compliance/)
+- [Multi-AZ Deployments in Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html)
+- [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
